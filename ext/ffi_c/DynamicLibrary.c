@@ -170,7 +170,11 @@ static void
 library_free(Library* library)
 {
     /* dlclose() on MacOS tends to segfault - avoid it */
-#ifndef __APPLE__
+//#ifndef __APPLE__
+#if 0
+    /* Apparently w/golang c-shared mode this is an issue for all platorms. -AA
+     * See: https://github.com/golang/go/issues/11100
+     */
     if (library->handle != NULL) {
         dl_close(library->handle);
     }
